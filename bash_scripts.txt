@@ -1,0 +1,19 @@
+We used RSEM package to run the following functions:
+
+- we generared the references:
+
+	software/bin/rsem-prepare-reference --gff3 melica/MNUTANS.r1.pgsb.May2022.gff3 \
+		--hisat2-hca melica/Mnut_pepper_pilon_polished.fasta \
+		melica/ref/annot_ref
+	
+Then, we ran rsem-calculate-expression directly on .fq files:
+
+	software/bin/rsem-calculate-expression --hisat2-hca -p 8 --paired-end --append-names \
+		RNAseq/BIe/Schubert-strandRNA-50-T4-BIe6-3_GTGGCC_L004_R1_001.fastq.gz \
+		RNAseq/BIe/Schubert-strandRNA-50-T4-BIe6-3_GTGGCC_L004_R2_001.fastq.gz \
+		ref/annot_ref \
+		expressions/T4-50-BIe6-3/T4-50-BIe6-3
+
+And the count matrix:
+
+	../software/bin/rsem-generate-data-matrix expressions/*/*.genes.results > countMatrix_2.rsem.txt
